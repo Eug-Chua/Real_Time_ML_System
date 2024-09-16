@@ -2,7 +2,6 @@ from typing import List, Dict
 import json
 from websocket import create_connection
 
-
 class KrakenWebsocketTradeAPI:
     
     URL = 'wss://ws.kraken.com/v2'
@@ -41,7 +40,7 @@ class KrakenWebsocketTradeAPI:
         self._ws.send(json.dumps(msg))
         print('Subscription worked!')
 
-        # dumping the first 2 messages we get from the websocket because
+        # putting aside the first 2 messages we get from the websocket because
         # they contain no trade data, just confirmation on their end that
         # subscription was successful
         _ = self._ws.recv()
