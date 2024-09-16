@@ -29,9 +29,10 @@ def produce_trades(
 
         while True:
 
-            # Get trades from the Kraken API
+            # Get trades from the Kraken API and save them as a list of dictionaries
             trades : List[Dict] = kraken_api.get_trades()
 
+            # access each dictionary saved in `trades`
             for trade in trades:
                 # Serialize an event using the defined Topic 
                 message = topic.serialize(key=trade["product_id"],
