@@ -2,4 +2,4 @@ build:
 	docker build -t trade_producer .
 
 run:
-	docker run -it --network redpanda_network trade-producer
+	docker run --network=redpanda_network trade-producer
