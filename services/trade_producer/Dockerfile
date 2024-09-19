@@ -14,14 +14,17 @@ RUN pip install poetry
 # All subsequent commands will be executed in this directory
 WORKDIR /app
 
-# copy all files from local machine, `.`,  into 
-# the /app directory in the container,
-# this effectively transfers application code into the image
-COPY . /app
+# copy the pyproject.toml and poetry.lock files into the container
+COPY pyproject.toml poetry.lock /app/
 
 # call the RUN command that uses Poetry to
 # install all dependencies defined in pyproject.toml
 RUN poetry install
+
+# copy all files from local machine, `.`,  into 
+# the /app directory in the container,
+# this effectively transfers application code into the image
+COPY . /app
 
 # run python src/main.py using Poetry,
 # execute the main.py script located in the src directory of the application
