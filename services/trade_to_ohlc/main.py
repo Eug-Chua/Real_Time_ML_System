@@ -45,5 +45,5 @@ if __name__ == '__main__':
         kafka_input_topic=config.kafka_input_topic_name,
         kafka_output_topic=config.kafka_output_topic_name,
         kafka_broker_address=config.kafka_broker_address,
-        olhc_window_seconds=config.ohlc_windows_seconds
+        olhc_window_seconds=config.ohlc_window_seconds
     )
