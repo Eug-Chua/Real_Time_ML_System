@@ -1,6 +1,7 @@
 from quixstreams import Application
 from typing import List, Dict
 from src.kraken_api import KrakenWebsocketTradeAPI
+from loguru import logger
 
 def produce_trades(
         kafka_broker_address: str,
@@ -26,7 +27,7 @@ def produce_trades(
     # create an instance of the Kraken API
     kraken_api = KrakenWebsocketTradeAPI(product_id=product_id)
 
-    print('Creating the producer...')
+    logger.info('Creating the producer...')
 
     # Create a Producer instance
     with app.get_producer() as producer:
@@ -49,7 +50,7 @@ def produce_trades(
                     key=message.key
                 )
             
-                print('Message sent!')
+                logger.info('Message sent!')
             
             from time import sleep
             sleep(1)

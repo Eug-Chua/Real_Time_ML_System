@@ -1,6 +1,7 @@
 from typing import List, Dict
 import json
 from websocket import create_connection
+from loguru import logger
 
 class KrakenWebsocketTradeAPI:
     
@@ -15,7 +16,7 @@ class KrakenWebsocketTradeAPI:
 
         # establish connection to the Kraken websocket API
         self._ws = create_connection(self.URL)
-        print('Connection established')
+        logger.info('Connection established')
 
         # subscribe to the trades for the given `product_id`
         self._subscribe(product_id)
@@ -25,7 +26,7 @@ class KrakenWebsocketTradeAPI:
         Establish connection to Kraken websocket API and
         subscribe to the trades for the given `product_id
         """
-        print(f'Subscribing to trades for {product_id}')
+        logger.info(f'Subscribing to trades for {product_id}')
 
         # subscribe to the trades for the given `product_id`
         msg = {
@@ -38,7 +39,7 @@ class KrakenWebsocketTradeAPI:
             }
             
         self._ws.send(json.dumps(msg))
-        print('Subscription worked!')
+        logger.info('Subscription worked!')
 
         # putting aside the first 2 messages we get from the websocket because
         # they contain no trade data, just confirmation on their end that
@@ -75,7 +76,7 @@ class KrakenWebsocketTradeAPI:
         
         # Check if 'data' key exists in the message
         if 'data' not in message:
-            print("Received message does not contain data.")
+            logger.info("Received message does not contain data.")
             return []
 
         # Extract trades from the message['data'] field
