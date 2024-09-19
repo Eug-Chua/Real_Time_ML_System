@@ -42,8 +42,8 @@ if __name__ == '__main__':
     from src.config import config
 
     trade_to_ohlc(
-        kafka_input_topic=kafka_input_topic,
-        kafka_output_topic=kafka_output_topic,
-        kafka_broker_address=kafka_broker_address,
-        olhc_window_seconds=olhc_window_seconds
+        kafka_input_topic=config.kafka_input_topic_name,
+        kafka_output_topic=config.kafka_output_topic_name,
+        kafka_broker_address=config.kafka_broker_address,
+        olhc_window_seconds=config.ohlc_windows_seconds
     )

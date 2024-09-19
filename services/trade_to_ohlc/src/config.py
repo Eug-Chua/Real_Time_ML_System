@@ -11,6 +11,6 @@ class Config(BaseSettings):
     kafka_broker_address: str = os.environ['KAFKA_BROKER_ADDRESS']
     kafka_input_topic_name: str = "trade"
     kafka_output_topic_name: str = "ohlc"
-    ohlc_windows_seconds: int = os.environ['OHLC_WINDOWS_SECONDS']
+    ohlc_window_seconds: int = os.environ['OHLC_WINDOWS_SECONDS']
 
 config = Config()
