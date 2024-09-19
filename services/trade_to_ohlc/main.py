@@ -39,11 +39,7 @@ def trade_to_ohlc(
 
 if __name__ == '__main__':
 
-    # read environment varaibles
-    kafka_input_topic = os.getenv('KAFKA_INPUT_TOPIC')
-    kafka_output_topic = os.getenv('KAFKA_OUTPUT_TOPIC')
-    kafka_broker_address = os.getenv('KAFKA_BROKER_ADDRESS')
-    olhc_window_seconds = os.getenv('OHLC_WINDOW_SECONDS')
+    from src.config import config
 
     trade_to_ohlc(
         kafka_input_topic=kafka_input_topic,
