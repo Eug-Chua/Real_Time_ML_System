@@ -1,3 +1,5 @@
+from loguru import logger
+
 def trade_to_ohlc(
         kafka_input_topic: str,
         kafka_output_topic: str,
