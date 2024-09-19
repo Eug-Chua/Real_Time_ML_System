@@ -2,6 +2,7 @@ from quixstreams import Application
 from typing import List, Dict
 from src.kraken_api import KrakenWebsocketTradeAPI
 from loguru import logger
+from src import config
 
 def produce_trades(
         kafka_broker_address: str,
@@ -14,7 +15,7 @@ def produce_trades(
     Args:
         kafka_broker_address (str): The address of the Kafka broker.
         kafka_topic_name (str): The name of the Kafka topic.
-         product_id: (str): The trade pair.
+        product_id: (str): The trade pair.
 
     Returns:
         None
@@ -58,7 +59,7 @@ def produce_trades(
 if __name__ == '__main__':
 
     produce_trades(
-        kafka_broker_address="redpanda-0:9092",
-        kafka_topic_name="trade",
-        product_id='BTC/USD'
+        kafka_broker_address=config.kafka_broker_address,
+        kafka_topic_name=config.kafka_topic_name,
+        product_id=config.product_id
     )
