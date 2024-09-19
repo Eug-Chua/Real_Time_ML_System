@@ -1,6 +1,9 @@
 # specify the base image to use for Docker image
 FROM python:3.11-slim-buster
 
+# add /app/src/ to the PYTHONPATH
+ENV PYTHONPATH=/app
+
 # sets an environment variable in the container.
 # PYTHONUNBUFFERED=1 ensures that Python output is
 # sent directly to the console (stdout)
