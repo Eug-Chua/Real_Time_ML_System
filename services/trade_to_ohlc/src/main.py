@@ -82,6 +82,8 @@ def trade_to_ohlc(
     # add timestamp key
     sdf['timestamp'] = sdf['end']
     
+    # keep the keys we want in the final message
+    sdf = sdf[['timestamp', 'open', 'high', 'low', 'close','product_id']]
 
     sdf = sdf.update(logger.info)
 
