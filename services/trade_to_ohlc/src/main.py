@@ -24,7 +24,8 @@ def trade_to_ohlc(
     # this handles all the low level communcation with kafka
     app = Application(
         broker_address=kafka_broker_address,
-        consumer_group="trade_to_ohlc"
+        consumer_group="trade_to_ohlc",
+        auto_offset_rest='earliest'
     )
 
     # specify the input and output topics for this application
@@ -39,11 +40,12 @@ def trade_to_ohlc(
         Initialize the OHLC candle with the first trade
         """
         return {
-            "timestamp":value['timestamp'],
+            # "timestamp":value['timestamp'],
             "open": value['price'],
             "high": value['price'],
             "low": value['price'],
-            "close": value['price']
+            "close": value['price'],
+            'product_id': value['product_id']
         }
 
     def update_ohlc_candle(ohlc_candle: dict, trade: dict) -> dict:
@@ -62,12 +64,24 @@ def trade_to_ohlc(
             "open": ohlc_candle['open'],
             "high": max(ohlc_candle['high'], trade['price']),
             "low": min(ohlc_candle['low'], trade['price']),
-            "close": trade['price']
+            "close": trade['price'],
+            'product_id': trade['product_id']
         }
 
     # apply transformation to the incoming data
     sdf = sdf.tumbling_window(duration_ms=timedelta(seconds=olhc_window_seconds))
-    sdf = sdf.reduce(reducer=update_ohlc_candle, initializer=init_ohlc_candle).final()
+    sdf = sdf.reduce(reducer=update_ohlc_candle, initializer=init_ohlc_candle).current()
+
+    # unpack the values we want 
+    sdf['open'] = sdf['value']['open']
+    sdf['high'] = sdf['value']['high']
+    sdf['low'] = sdf['value']['low']
+    sdf['close'] = sdf['value']['close']
+    sdf['product_id'] = sdf['value']['product_id']
+
+    # add timestamp key
+    sdf['timestamp'] = sdf['end']
+    
 
     sdf = sdf.update(logger.info)
 
